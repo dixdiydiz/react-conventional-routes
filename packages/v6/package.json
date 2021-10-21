@@ -1,0 +1,16 @@
+{
+  "name": "react-conventional-route-v6",
+  "version": "6.0.0",
+  "description": "Base on React Router,version 6.",
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc"
+  },
+  "main": "dist/index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dixdiydiz/react-conventional-route.git"
+  },
+  "homepage": "https://github.com/dixdiydiz/react-conventional-route#readme"
+}
