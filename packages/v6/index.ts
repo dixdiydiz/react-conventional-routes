@@ -25,7 +25,7 @@ function factory(files: string[], handler: (f: string)=>any, folder: string, ful
     if (/^_index\./.test(netFile)) {
       wrap = true
       indexElement = {
-        path: isRoot ? '/*' : `${cutoutPath(folder)}/*`,
+        path: isRoot ? '/' : `${cutoutPath(folder)}/*`,
         element: handler(file)
       }
       continue

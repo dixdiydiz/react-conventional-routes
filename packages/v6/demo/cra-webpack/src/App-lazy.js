@@ -1,12 +1,19 @@
 import  { createElement, Suspense, lazy } from 'react';
 import routeGenerate from 'react-conventional-route-v6'
 import { useRoutes } from 'react-router-dom';
+import Layout from '../components/layout'
 
 // step1: get all routing components
-const routeCtx = require.context('./pages', true, /((?<!__tests__).)*\.route\.js/, 'lazy-once')
+// exclude board/ files
+const routeCtx = require.context('./pages', true, /^((?!__tests__).)*\.route\.js$/, 'lazy-once')
+console.log(routeCtx.keys())
 
 // step2: generate all routes
-const routes = routeGenerate(routeCtx.keys(), (f)=> createElement(lazy(() => routeCtx(f))), '.')
+const routes = routeGenerate(
+  routeCtx.keys(),
+  (f)=> createElement(lazy(() => routeCtx(f))),
+  '.'
+)
 // you can see all routes array
 console.log(routes)
 
