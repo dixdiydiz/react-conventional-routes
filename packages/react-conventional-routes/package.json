@@ -1,0 +1,11 @@
+{
+  "name": "react-conventional-routes",
+  "version": "1.0.0",
+  "description": "Base on React Router,version 6.",
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc"
+  },
+  "main": "dist/index.js",
+  "devDependencies": {}
+}
