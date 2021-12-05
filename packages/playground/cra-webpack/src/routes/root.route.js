@@ -3,7 +3,7 @@ import {Outlet} from 'react-router-dom'
 function Route() {
   return (
     <div>
-      <p>In 'pages/users/_index.route.js'</p>
+      <p>In 'routes/root.route.js'</p>
       <p>---------Outlet---------</p>
       <Outlet />
     </div>

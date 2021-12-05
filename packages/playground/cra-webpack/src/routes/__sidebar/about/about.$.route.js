@@ -3,8 +3,7 @@ import {Outlet} from 'react-router-dom'
 function Route() {
   return (
     <div>
-      <p>In 'pages/about/index.route.js'</p>
-      <p>---------Outlet---------</p>
+    <div>In 'about/about.$.route.js'</div>
       <Outlet />
     </div>
   );

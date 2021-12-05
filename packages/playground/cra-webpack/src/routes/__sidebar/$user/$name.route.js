@@ -1,6 +1,6 @@
 function Route() {
   return (
-    <div>In 'pages/users/deep/404.route.js'</div>
+    <div>In '$user/$name.route.js'</div>
   );
 }
 

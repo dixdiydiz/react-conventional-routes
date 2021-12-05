@@ -30,7 +30,7 @@
       />
     </Route>
 ```
-- `/routes/{folder}/file.$.tsx`  
+- `/routes/{folder}/{folder}.$.tsx`  
   It will create a route path like `file/*`.
 ```javascript
     <Route path="foo/*" element={<Foo />}>

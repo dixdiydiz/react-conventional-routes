@@ -1,6 +1,6 @@
 function Route() {
   return (
-    <div>In 'pages/404.route.js'</div>
+    <div>In '$user/me/me.route.js'</div>
   );
 }
 

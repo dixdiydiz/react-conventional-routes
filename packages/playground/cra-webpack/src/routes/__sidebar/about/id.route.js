@@ -1,6 +1,6 @@
 function Route() {
   return (
-    <div>In 'pages/board/main.route.js'</div>
+    <div>In 'about/id.route.js'</div>
   );
 }
 

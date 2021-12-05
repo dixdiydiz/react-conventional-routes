@@ -1,6 +1,6 @@
 function Route() {
   return (
-    <div>In 'pages/users/deep/level.route.js'</div>
+    <div>In 'board/main.route.js'</div>
   );
 }
 

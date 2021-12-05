@@ -1,103 +1,99 @@
-import * as path from 'path'
-import factory from '../index'
+import createRoutes from '../index'
 
 describe('routes', () => {
-  it('absolute path', () => {
+  it('root route', () => {
     const files = [
-      'pages/index.route.js',
+      'pages/root.route.js',
       'pages/404.route.js',
-      'pages/about/index.route.js',
-      'pages/about/[id].route.js',
-      'pages/about/deep/404.route.js',
-      'pages/about/deep/_index.route.js',
-      'pages/users/_index.route.js',
-      'pages/users/[id].route.js',
-      'pages/users/dont.special.js',
-      'pages/users/[serial]/[id].route.js',
-      'pages/users/deep/level.route.js',
-      'pages/users/deep/404.route.js',
+      'pages/about/about.$.route.js',
+      'pages/about/$me.route.js',
+      'pages/about/long.route.path.route.js',
     ]
-    expect(factory( files, (f) => f, 'pages')).toEqual([
-      { element: `pages/index.route.js`, path: '/' },
-      { element: `pages/about/index.route.js`, path: 'about' },
-      { element: `pages/about/[id].route.js`, path: 'about/:id' },
+    expect(createRoutes( files, 'pages',
       {
-        children: [
-          { element: `pages/about/deep/404.route.js`, path: '*' }
-        ],
-        element: `pages/about/deep/_index.route.js`,
-        path: 'about/deep/*'
-      },
+        handler: f => f,
+        suffix: 'route'
+      })).toEqual([
       {
-        element: `pages/users/_index.route.js`,
-        path: 'users/*',
+        element: `pages/root.route.js`,
+        path: '/',
         children: [
-          { element: `pages/users/[id].route.js`, path: ':id' },
-          { element: `pages/users/dont.special.js`, path: 'dont' },
+          { element: `pages/404.route.js`, path: '*' },
           {
-            element: `pages/users/[serial]/[id].route.js`,
-            path: ':serial/:id'
+            children: [
+              { element: `pages/about/$me.route.js`, path: ':me' },
+              { element: `pages/about/long.route.path.route.js`, path: 'long/route/path' },
+            ],
+            element: `pages/about/about.$.route.js`,
+            path: 'about/*',
           },
-          {
-            element: `pages/users/deep/level.route.js`,
-            path: 'deep/level'
-          },
-          {
-            element: `pages/users/deep/404.route.js`,
-            path: 'deep/*'
-          }
         ]
-      },
-      { element: `pages/404.route.js`, path: '*' }
+      }
     ])
   })
-  it('relative path', () => {
+  it('layout route', () => {
     const files = [
-      './index.route.js',
-      './404.route.js',
-      './about/index.route.js',
-      './about/[id].route.js',
-      './about/deep/404.route.js',
-      './about/deep/_index.route.js',
-      './users/_index.route.js',
-      './users/[id].route.js',
-      './users/dont.special.js',
-      './users/[serial]/[id].route.js',
-      './users/deep/level.route.js',
-      './users/deep/404.route.js',
+      './__layout/__layout.route.js',
+      './__layout/about/about.route.js',
+      './__layout/about/phone.route.js',
     ]
-    expect(factory( files, (f) => f, '.')).toEqual([
-      { element: `./index.route.js`, path: '/' },
-      { element: `./about/index.route.js`, path: 'about' },
-      { element: `./about/[id].route.js`, path: 'about/:id' },
+    expect(createRoutes( files, '.', {
+      handler: f => f,
+      suffix: 'route'
+    } )).toEqual([
       {
+        element: `./__layout/__layout.route.js`,
         children: [
-          { element: `./about/deep/404.route.js`, path: '*' }
-        ],
-        element: `./about/deep/_index.route.js`,
-        path: 'about/deep/*'
-      },
-      {
-        element: `./users/_index.route.js`,
-        path: 'users/*',
-        children: [
-          { element: `./users/[id].route.js`, path: ':id' },
-          { element: `./users/dont.special.js`, path: 'dont' },
           {
-            element: `./users/[serial]/[id].route.js`,
-            path: ':serial/:id'
+            element: `./__layout/about/about.route.js`,
+            path: 'about',
+            children: [
+              { element: `./__layout/about/phone.route.js`, path: 'phone' },
+            ]
           },
-          {
-            element: `./users/deep/level.route.js`,
-            path: 'deep/level'
-          },
-          {
-            element: `./users/deep/404.route.js`,
-            path: 'deep/*'
-          }
         ]
       },
-      { element: `./404.route.js`, path: '*' }
+    ])
+  })
+  it('index route', () => {
+    const files = [
+      './__layout/__layout.route.js',
+      './__layout/about/about.route.js',
+      './__layout/about/index.route.js',
+      './__layout/about/phone.route.js',
+    ]
+    expect(createRoutes( files, '.', {
+      handler: f => f,
+      suffix: 'route'
+    } )).toEqual([
+      {
+        element: `./__layout/__layout.route.js`,
+        children: [
+          {
+            element: `./__layout/about/about.route.js`,
+            path: 'about',
+            children: [
+              { element: `./__layout/about/index.route.js`, index: true },
+              { element: `./__layout/about/phone.route.js`, path: 'phone' },
+            ]
+          },
+        ]
+      },
+    ])
+  })
+  it('separate route', () => {
+    const files = [
+      'routes/$info/one.route.js',
+      'routes/$info/two.route.js',
+      'routes/$info/three.route.js',
+    ]
+    expect(createRoutes( files, 'routes', {
+      handler: f => f,
+      suffix: 'route'
+    } )).toEqual([
+      { element: 'routes/$info/one.route.js', path: ':info/one' },
+      { element: 'routes/$info/two.route.js', path: ':info/two' },
+      { element: 'routes/$info/three.route.js', path: ':info/three' },
     ])
   })
 })
